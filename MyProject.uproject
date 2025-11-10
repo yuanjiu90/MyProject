@@ -1,0 +1,25 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{4D9D9288-4336-30D9-AEC1-1ABEBBE4E3AC}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "DSGame",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"Additionaldependencies": [
+				"Engine"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}
