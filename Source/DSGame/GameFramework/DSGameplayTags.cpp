@@ -23,8 +23,7 @@ UDSGameplayTags& UDSGameplayTags::Get()
 void UDSGameplayTags::InitializeNativeTags()
 {
 	//测试代码
-	ADD_NATIVE_TAG(DSGameTestTags, "DSGame.TestTag", "Test Tag");
-
+	ADD_NATIVE_TAG(DSGameTestTags, "DSGame.TestTag", "This is Test Tag");
 
 
 
