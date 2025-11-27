@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "Modules/ModuleManager.h"
 #include "DSGame.h"
+#include "Modules/ModuleManager.h"
 #include "GameplayTagsManager.h"
 #include "GameFramework/DSGameplayTags.h"
 
