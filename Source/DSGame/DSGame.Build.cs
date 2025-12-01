@@ -15,6 +15,7 @@ public class DSGame : ModuleRules
 			"EnhancedInput",
 			"GameplayTags",
 			"DeveloperSettings",
+			"DSDebugSystem",
 		});
 		
 		PrivateDependencyModuleNames.AddRange(new string[]
