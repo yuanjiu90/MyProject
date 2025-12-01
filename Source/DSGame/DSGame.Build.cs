@@ -6,14 +6,19 @@ public class DSGame : ModuleRules
 {
 	public DSGame(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PrivateDependencyModuleNames.AddRange(new string[]
+		PublicDependencyModuleNames.AddRange(new[] 
 		{
 			"Core", 
 			"CoreUObject", 
-			"Engine", 
+			"Engine",  
 			"InputCore", 
 			"EnhancedInput",
-			"GameplayTags"
+			"GameplayTags",
+			"DeveloperSettings",
+		});
+		
+		PrivateDependencyModuleNames.AddRange(new string[]
+		{
 		});
 	}
 }
