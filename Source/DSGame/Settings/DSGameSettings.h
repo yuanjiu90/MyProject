@@ -1,5 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "DSGame/GameFramework/Input/DSEnhancedInputComponentType.h"
 #include "Engine/DeveloperSettings.h"
 #include "DSGameSettings.generated.h"
 
@@ -27,4 +28,7 @@ public:
 public:
 	UPROPERTY(EditAnywhere, Config,BlueprintReadOnly, Category = "Gameplay")
 	float TestFloat = 100.f;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UDSInputConfig> InputActionConfig;
 };

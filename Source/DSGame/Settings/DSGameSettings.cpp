@@ -2,7 +2,7 @@
 
 UDSGameSettings::UDSGameSettings()
 {
-	TestFloat = 100.f;
+	InputActionConfig = nullptr;
 }
 
 UDSGameSettings* UDSGameSettings::Get()
