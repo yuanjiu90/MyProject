@@ -12,43 +12,56 @@ class UDSEnhancedInputComponent : public UEnhancedInputComponent
 public:
 	UDSEnhancedInputComponent(const FObjectInitializer& ObjectInitializer);
 	
-	virtual void SetupPlayerInputComponent();
+	void SetupPlayerInputComponent();
 
 	const UEnum* GetInputEnumPtr() const {return EnumPtr;};
 
-	void UpdateInputConfig();
-
+	// 添加输入映射
+	void AddInputMapping() const;
+	// 移除输入映射
+	void RemoveInputMapping() const;
+	
 	template<class UserClass, typename FuncType>
-	uint32 BindNativeAction(const UDSInputConfig* InputConfig, const FName InputName, ETriggerEvent TriggerEvent, UserClass* Object, FuncType Func, bool bLogIfNotFound);
+	void BindNativeAction(const UDSInputConfig* InputConfig, const FName InputName, ETriggerEvent TriggerEvent, UserClass* Object, FuncType Func);
 
 	template<class UserClass, typename PressedFuncType, typename ReleasedFuncType>
 	void BindAbilityActions(const UDSInputConfig* InputConfig, UserClass* Object, PressedFuncType PressedFunc, ReleasedFuncType ReleasedFunc);
 
+protected:
+	void UpdateInputConfig();
+	
 	void RemoveBinds();
 private:
 	void Input_AbilityInputTagPressed(FName InputName, bool bCheckLongPress);
 	void Input_AbilityInputTagReleased(FName InputName);
+
+	void Move(const FInputActionValue& InputActionValue);
+	void Look(const FInputActionValue& InputActionValue);
+	void Jump(const FInputActionValue& InputActionValue);
+	void StopJumping(const FInputActionValue& InputActionValue);
+
+	class ADSCharacter* GetDSCharacter();
+
 private:
 	
 	UPROPERTY(Transient)
 	TObjectPtr<const UEnum> EnumPtr;
 
 	UPROPERTY(Transient)
-	TObjectPtr<UDSInputConfig> InputActionConfig;
+	FDSInputData InputDataConfig;
 	
 	//缓存绑定的输入事件
 	TArray<uint32> BindHandles;
 };
 
 template<class UserClass, typename FuncType>
-uint32 UDSEnhancedInputComponent::BindNativeAction(const UDSInputConfig* InputConfig, const FName InputName, ETriggerEvent TriggerEvent, UserClass* Object, FuncType Func, bool bLogIfNotFound)
+void UDSEnhancedInputComponent::BindNativeAction(const UDSInputConfig* InputConfig, const FName InputName, ETriggerEvent TriggerEvent, UserClass* Object, FuncType Func)
 {
 	check(InputConfig);
-	if (const UInputAction* IA = InputConfig->FindNativeInputActionForName(InputName, bLogIfNotFound))
+	if (const UInputAction* IA = InputConfig->FindNativeInputActionForName(InputName))
 	{
-		return BindHandles.Add(BindAction(IA, TriggerEvent, Object, Func).GetHandle());
+		BindHandles.Add(BindAction(IA, TriggerEvent, Object, Func).GetHandle());
 	}
-	return 0;
 }
 
 template<class UserClass, typename PressedFuncType, typename ReleasedFuncType>

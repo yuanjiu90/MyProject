@@ -2,7 +2,7 @@
 
 UDSGameSettings::UDSGameSettings()
 {
-	InputActionConfig = nullptr;
+	
 }
 
 UDSGameSettings* UDSGameSettings::Get()

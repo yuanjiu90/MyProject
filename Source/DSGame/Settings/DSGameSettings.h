@@ -26,9 +26,7 @@ public:
 		return FName(TEXT("CustomSetting"));
 	}
 public:
-	UPROPERTY(EditAnywhere, Config,BlueprintReadOnly, Category = "Gameplay")
-	float TestFloat = 100.f;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UDSInputConfig> InputActionConfig;
+	
+	UPROPERTY(Config, EditAnywhere, Category = "InputConfig")
+	FDSInputData InputDataConfig;
 };

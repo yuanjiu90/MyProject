@@ -2,14 +2,19 @@
 #include "CoreMinimal.h"
 #include "DSEnhancedInputComponentType.generated.h"
 
+class UInputMappingContext;
 //GA按键绑定
 UENUM(BlueprintType)
 enum class EDSGameplayAbilityInputBinds : uint8
 {
-	// 开火
-	Fire = 0						UMETA(DisplayName = "Fire"),
+	// 移动
+	Move = 0						UMETA(DisplayName = "Move"),
+	// 左右看
+	Look							UMETA(DisplayName = "Look"),
 	// 跳跃
 	Jump							UMETA(DisplayName = "Jump"),
+	// 开火
+	Fire = 0						UMETA(DisplayName = "Fire"),
 	// 换弹
 	Reload							UMETA(DisplayName = "Reload"),
 };
@@ -55,7 +60,7 @@ public:
 
 	UDSInputConfig(const FObjectInitializer& ObjectInitializer){};
 
-	UFUNCTION(BlueprintCallable, Category = "Lyra|Pawn")
+	UFUNCTION(BlueprintCallable, Category = "InputAction")
 	const UInputAction* FindNativeInputActionForName(const FName InputName) const
 	{
 		for (const FDSInputAction& Action : NativeInputActions)
@@ -68,7 +73,7 @@ public:
 		return nullptr;
 	};
 
-	UFUNCTION(BlueprintCallable, Category = "Lyra|Pawn")
+	UFUNCTION(BlueprintCallable, Category = "InputAction")
 	const UInputAction* FindAbilityInputActionForName(const FName InputName) const
 	{
 		for (const FDSInputAction& Action : AbilityInputActions)
@@ -82,15 +87,33 @@ public:
 	};
 
 public:
-	// List of input actions used by the owner.  These input actions are mapped to a gameplay tag and must be manually bound.
+	// 通用IA
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Meta = (TitleProperty = "InputAction"))
 	TArray<FDSInputAction> NativeInputActions;
 
-	// List of input actions used by the owner.  These input actions are mapped to a gameplay tag and are automatically bound to abilities with matching input tags.
+	// 技能IA
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Meta = (TitleProperty = "InputAction"))
 	TArray<FDSInputAction> AbilityInputActions;
 
 	//短按与长按对应的按键
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Meta = (TitleProperty = "InputAction"))
 	TMap<FName, FName> LongPressKeyMap;
+};
+
+USTRUCT()
+struct FDSInputData
+{
+	GENERATED_BODY()
+
+	// 显示名称
+	UPROPERTY(EditAnywhere)
+	FText DisplayName;
+
+	// 输入映射
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UInputMappingContext> InputMappingContext;
+
+	// 输入配置
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UDSInputConfig> InputActionConfig;
 };
