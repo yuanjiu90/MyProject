@@ -16,6 +16,8 @@ public class DSGame : ModuleRules
 			"GameplayTags",
 			"DeveloperSettings",
 			"DSDebugSystem",
+			"GameplayAbilities",
+			"GameplayTasks",
 		});
 		
 		PrivateDependencyModuleNames.AddRange(new string[]

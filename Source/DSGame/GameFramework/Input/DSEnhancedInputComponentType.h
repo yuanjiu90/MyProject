@@ -14,9 +14,11 @@ enum class EDSGameplayAbilityInputBinds : uint8
 	// 跳跃
 	Jump							UMETA(DisplayName = "Jump"),
 	// 开火
-	Fire = 0						UMETA(DisplayName = "Fire"),
+	Fire							UMETA(DisplayName = "Fire"),
 	// 换弹
 	Reload							UMETA(DisplayName = "Reload"),
+
+	NONE = 255,
 };
 
 /**

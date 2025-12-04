@@ -2,6 +2,7 @@
 #include "DSEnhancedInputComponentType.h"
 #include "EnhancedInputSubsystems.h"
 #include "DSGame/GameFramework/Character/DSCharacter.h"
+#include "DSGame/GameFramework/GameplayAbilities/DSAbilitySystemComponent.h"
 #include "DSGame/GameFramework/PlayerController/DSPlayerController.h"
 #include "DSGame/Settings/DSGameSettings.h"
 #include "LogSystem/DSLogHelper.h"
@@ -171,31 +172,32 @@ ADSCharacter* UDSEnhancedInputComponent::GetDSCharacter()
 
 void UDSEnhancedInputComponent::Input_AbilityInputTagPressed(FName InputName, bool bCheckLongPress)
 {
-	if(!IsValid(InputDataConfig.InputActionConfig.Get()))
+	if (ADSCharacter* DSCharacter = GetDSCharacter())
 	{
-		return;
-	}
-
-	//长按操作
-	if (bCheckLongPress)
-	{
-		
-	}
-
-	ADSCharacter* DSCharacter = GetDSCharacter();
-	if (DSCharacter)
-	{
-		//激活技能
-		//DSCharacter->Input_AbilityInputTagPressed(InputName);
+		if (UAbilitySystemComponent* ASC = DSCharacter->GetAbilitySystemComponent())
+		{
+			if (UDSAbilitySystemComponent* DSAbilitySystemComponent = Cast<UDSAbilitySystemComponent>(ASC))
+			{
+				//激活技能
+				const int32 InputID = GetInputEnumPtr()->GetIndexByName(InputName);
+				DSAbilitySystemComponent->AbilityLocalInputPressed(InputID);
+			}
+		}
 	}	
 }
 
 void UDSEnhancedInputComponent::Input_AbilityInputTagReleased(FName InputName)
 {
-	ADSCharacter* DSCharacter = GetDSCharacter();
-	if (DSCharacter)
+	if (ADSCharacter* DSCharacter = GetDSCharacter())
 	{
-		//结束技能
-		//DSCharacter->Input_AbilityInputTagPressed(InputName);
-	}
+		if (UAbilitySystemComponent* ASC = DSCharacter->GetAbilitySystemComponent())
+		{
+			if (UDSAbilitySystemComponent* DSAbilitySystemComponent = Cast<UDSAbilitySystemComponent>(ASC))
+			{
+				//取消激活技能
+				const int32 InputID = GetInputEnumPtr()->GetIndexByName(InputName);
+				DSAbilitySystemComponent->AbilityLocalInputReleased(InputID);
+			}
+		}
+	}	
 }

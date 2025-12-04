@@ -8,7 +8,7 @@
 			"Name": "DSGame",
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
-			"Additionaldependencies": [
+			"AdditionalDependencies": [
 				"Engine"
 			]
 		}
@@ -20,6 +20,10 @@
 			"TargetAllowList": [
 				"Editor"
 			]
+		},
+		{
+			"Name": "GameplayAbilities",
+			"Enabled": true
 		}
 	]
 }

@@ -8,13 +8,15 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
 #include "InputActionValue.h"
+#include "DSGame/GameFramework/GameplayAbilities/DSAbilitySystemComponent.h"
+#include "DSGame/GameFramework/GameplayAbilities/DSAbilityType.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
 // AMyProjectCharacter
 
-ADSCharacter::ADSCharacter()
+ADSCharacter::ADSCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -50,6 +52,17 @@ ADSCharacter::ADSCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	AbilitySystem = CreateDefaultSubobject<UDSAbilitySystemComponent>(TEXT("AbilitySystem"));
+	AbilitySystem->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+}
+
+void ADSCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	//初始化GAS相关配置
+	ApplyStartupConfig();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -99,4 +112,32 @@ void ADSCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void ADSCharacter::ApplyStartupConfig()
+{
+	//只在主控端执行GA初始化
+	if (!HasAuthority())
+	{
+		return;
+	}
+
+	//初始化通用GA
+	if (GeneralSkillsAssets.Get() != nullptr)
+	{
+		for (auto GeneralSkill : GeneralSkillsAssets->GeneralSkills)
+		{
+			AbilitySystem->GiveDSAbility(GeneralSkill);
+		}
+	}
+
+	//初始化GE
+	
+	//初始化属性
+	
+}
+
+UAbilitySystemComponent* ADSCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystem;
 }

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "DSCharacter.generated.h"
@@ -16,7 +17,7 @@ struct FInputActionValue;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
-class ADSCharacter : public ACharacter
+class ADSCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -29,7 +30,9 @@ class ADSCharacter : public ACharacter
 	UCameraComponent* FollowCamera;
 
 public:
-	ADSCharacter();
+	ADSCharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	virtual void BeginPlay() override;
 	
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
@@ -48,5 +51,22 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	//------------------------------- GAS Start -------------------------------
+public:
+
+	void ApplyStartupConfig();
+	
+	//外部获取ASC的接口
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UDSAbilitySystemComponent> AbilitySystem;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UDSGeneralSkillsAssets> GeneralSkillsAssets;
+
+	//------------------------------- GAS End -------------------------------
 };
 
