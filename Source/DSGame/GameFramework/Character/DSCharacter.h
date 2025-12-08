@@ -61,12 +61,22 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities", meta = (AllowPrivateAccess = "true"))
+	// 技能组件
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
 	TObjectPtr<class UDSAbilitySystemComponent> AbilitySystem;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities", meta = (AllowPrivateAccess = "true"))
+	// 通用技能资产
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
 	TObjectPtr<class UDSGeneralSkillsAssets> GeneralSkillsAssets;
 
+	// 属性集
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities")
+	TObjectPtr<class UDSCharacterAttributeSet> AttributeSet;
+
+	// 初始属性 行类型为AttributeMetaData
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
+	UDataTable* StartupAttributes;
+	
 	//------------------------------- GAS End -------------------------------
 };
 

@@ -10,6 +10,7 @@
 #include "InputActionValue.h"
 #include "DSGame/GameFramework/GameplayAbilities/DSAbilitySystemComponent.h"
 #include "DSGame/GameFramework/GameplayAbilities/DSAbilityType.h"
+#include "DSGame/GameFramework/GameplayAbilities/DSCharacterAttributeSet.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -53,8 +54,10 @@ ADSCharacter::ADSCharacter(const FObjectInitializer& ObjectInitializer) : Super(
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
+	//GAS相关
 	AbilitySystem = CreateDefaultSubobject<UDSAbilitySystemComponent>(TEXT("AbilitySystem"));
 	AbilitySystem->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+	AttributeSet = CreateDefaultSubobject<UDSCharacterAttributeSet>(TEXT("AttributeSet"));
 }
 
 void ADSCharacter::BeginPlay()
@@ -133,8 +136,12 @@ void ADSCharacter::ApplyStartupConfig()
 
 	//初始化GE
 	
-	//初始化属性
 	
+	//初始化属性
+	if (AttributeSet && StartupAttributes)
+	{
+		AbilitySystem->InitStats(AttributeSet.GetClass(), StartupAttributes);
+	}	
 }
 
 UAbilitySystemComponent* ADSCharacter::GetAbilitySystemComponent() const
