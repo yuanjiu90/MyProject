@@ -1,6 +1,7 @@
 #include <DSGame/GameFramework/GameplayAbilities/DSCharacterAttributeSet.h>
 
 #include "AbilitySystemComponent.h"
+#include "GameplayEffectExtension.h"
 #include "HLSLMathAliases.h"
 #include "Net/UnrealNetwork.h"
 
@@ -43,9 +44,35 @@ void UDSCharacterAttributeSet::PreAttributeChange(const FGameplayAttribute& Attr
 	}
 }
 
+//允许在整个GE执行前，就介入并修改提案或直接否决它。
+// ****** 仅在GE即将修改BaseValue时被调用（Instant或带周期的GE） ******
+//Return: true:GE应该被执行。false:GE应该被否决。
+bool UDSCharacterAttributeSet::PreGameplayEffectExecute(struct FGameplayEffectModCallbackData& Data)
+{
+	bool bReturn = Super::PreGameplayEffectExecute(Data);
+	
+	//允许在整个GameplayEffect执行前，就介入并修改提案或直接否决它。
+
+	//AActor* TargetActor = Data.Target.GetAvatarActor();//获取目标
+	//AActor* InstigatorAction = Data.EffectSpec.GetEffectContext().GetInstigator();//获取GE执行器
+
+	
+
+	return bReturn;
+}
+
+//在GE成功修改了BaseValue后，进行最终的游戏逻辑响应和事件触发
+// ****** 仅在GE修改BaseValue后被调用（Instant或带周期的GE） ******
+void UDSCharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+
+	
+}
+
 void UDSCharacterAttributeSet::AdjustAttributeForMaxChange(const FGameplayAttributeData& AffectedAttribute,
-	const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty,
-	bool bFillAffectedAttribute)
+                                                           const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty,
+                                                           bool bFillAffectedAttribute)
 {
 	UAbilitySystemComponent* AbilityComp = GetOwningAbilitySystemComponent();
 	const float CurrentMaxValue = MaxAttribute.GetCurrentValue();

@@ -50,6 +50,10 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	//属性值实际被修改前，对即将发生的改动进行预检查和约束
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	//允许在整个GE执行前，就介入并修改提案或直接否决它。（即将修改BaseValue时被调用）
+	virtual bool PreGameplayEffectExecute(struct FGameplayEffectModCallbackData &Data) override;
+	//在GE成功修改了BaseValue后，进行最终的游戏逻辑响应和事件触发
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 public:
 	//生命值
 	UPROPERTY(BlueprintReadOnly, Category = "Character", ReplicatedUsing = OnRep_Health)
