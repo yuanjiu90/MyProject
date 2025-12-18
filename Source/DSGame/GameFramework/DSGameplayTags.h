@@ -20,4 +20,5 @@ public:
 private:
 	static TObjectPtr<UDSGameplayTags> Singleton;
 	void InitializeNativeTags();
+	void AddNativeTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment);
 };

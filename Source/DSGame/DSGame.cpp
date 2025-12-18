@@ -4,6 +4,7 @@
 #include "Modules/ModuleManager.h"
 #include "GameplayTagsManager.h"
 #include "GameFramework/DSGameplayTags.h"
+#include "UI/DSUIGameplayTags.h"
 
 IMPLEMENT_PRIMARY_GAME_MODULE(FDSGameModule, DSGame, "DSGame");
 
@@ -14,6 +15,7 @@ void FDSGameModule::StartupModule()
 	// Register native tags
 	UGameplayTagsManager::OnLastChanceToAddNativeTags().AddLambda([](){							
 		UDSGameplayTags::Get();
+		UDSUIGameplayTags::Get();
 	});
 }
 

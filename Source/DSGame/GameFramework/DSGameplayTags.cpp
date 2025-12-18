@@ -1,10 +1,6 @@
 #include "DSGameplayTags.h"
 #include "GameplayTagsManager.h"
 
-//定义一个宏，简化创建Tag的代码
-#define ADD_NATIVE_TAG(OutTag, TagName, TagComment) \
-	OutTag = UGameplayTagsManager::Get().AddNativeGameplayTag(FName(TagName), FString(TEXT("(Native) ")) + FString(TagComment))
-
 TObjectPtr<UDSGameplayTags> UDSGameplayTags::Singleton = nullptr;
 
 UDSGameplayTags& UDSGameplayTags::Get()
@@ -23,11 +19,16 @@ UDSGameplayTags& UDSGameplayTags::Get()
 void UDSGameplayTags::InitializeNativeTags()
 {
 	//测试代码
-	ADD_NATIVE_TAG(DSGameTestTags, "DSGame.TestTag", "This is Test Tag");
+	AddNativeTag(DSGameTestTags, "DSGame.TestTag", "This is Test Tag");
 
 
 
 	
+}
+
+void UDSGameplayTags::AddNativeTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment)
+{
+	OutTag = UGameplayTagsManager::Get().AddNativeGameplayTag(FName(TagName), FString(TEXT("(Native) ")) + FString(TagComment));
 }
 
 // 销毁
