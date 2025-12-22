@@ -18,6 +18,8 @@ public class DSGame : ModuleRules
 			"DSDebugSystem",
 			"GameplayAbilities",
 			"GameplayTasks",
+			"UMG",
+			"CommonUI",
 		});
 		
 		PrivateDependencyModuleNames.AddRange(new string[]

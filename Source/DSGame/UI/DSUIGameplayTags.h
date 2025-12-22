@@ -16,16 +16,15 @@ public:
 	//Modal
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI.Layer")
 	FGameplayTag UI_Layer_Modal;
-	//GameMenu
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI.Layer")
-	FGameplayTag UI_Layer_GameMenu;
 	//HUD
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI.Layer")
 	FGameplayTag UI_Layer_HUD;
+	//GameMenu
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI.Layer")
+	FGameplayTag UI_Layer_GameMenu;
 	//Game
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI.Layer")
 	FGameplayTag UI_Layer_Game;
-	
 
 private:
 	static TObjectPtr<UDSUIGameplayTags> Singleton;
