@@ -24,6 +24,7 @@ public class DSGame : ModuleRules
 		
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
+			"CommonGame"
 		});
 	}
 }
