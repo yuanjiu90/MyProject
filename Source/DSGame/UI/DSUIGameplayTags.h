@@ -16,9 +16,9 @@ public:
 	//Modal
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI.Layer")
 	FGameplayTag UI_Layer_Modal;
-	//HUD
+	//Menu
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI.Layer")
-	FGameplayTag UI_Layer_HUD;
+	FGameplayTag UI_Layer_Menu;
 	//GameMenu
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI.Layer")
 	FGameplayTag UI_Layer_GameMenu;

@@ -20,7 +20,7 @@ void UDSUIGameplayTags::InitializeNativeTags()
 	//Layer
 	AddNativeTag(UI_Layer_Modal, "UI.Layer.Modal", "This is Modal Layer Tag");
 	AddNativeTag(UI_Layer_GameMenu, "UI.Layer.GameMenu", "This is GameMenu Layer Tag");
-	AddNativeTag(UI_Layer_HUD, "UI.Layer.HUD", "This is Modal HUD Tag");
+	AddNativeTag(UI_Layer_Menu, "UI.Layer.Menu", "This is Modal Menu Tag");
 	AddNativeTag(UI_Layer_Game, "UI.Layer.Game", "This is Modal Game Tag");
 }
 
