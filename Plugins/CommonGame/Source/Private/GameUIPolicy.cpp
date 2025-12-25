@@ -125,9 +125,7 @@ void UGameUIPolicy::AddLayoutToViewport(UCommonLocalPlayer* LocalPlayer, UPrimar
 	UE_LOG(LogCommonGame, Log, TEXT("[%s] is adding player [%s]'s root layout [%s] to the viewport"), *GetName(), *GetNameSafe(LocalPlayer), *GetNameSafe(Layout));
 
 	Layout->SetPlayerContext(FLocalPlayerContext(LocalPlayer));
-	// 原WT游戏UI默认使用(AddToViewport)方法，如果使用(AddToPlayerScreen)将永远在下层
-	// Layout->AddToPlayerScreen(1000);
-	Layout->AddToViewport(3);
+	Layout->AddToPlayerScreen(1000);
 
 	OnRootLayoutAddedToViewport(LocalPlayer, Layout);
 }
