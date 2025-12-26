@@ -19,12 +19,13 @@ public class DSGame : ModuleRules
 			"GameplayAbilities",
 			"GameplayTasks",
 			"UMG",
-			"CommonUI",
 		});
 		
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
-			"CommonGame"
+			"CommonUI",
+			"CommonGame",
+			"CommonUser",
 		});
 	}
 }
