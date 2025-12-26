@@ -2,6 +2,7 @@
 
 #include "GameUIManagerSubsystem.h"
 
+#include "CommonGameSettings.h"
 #include "CommonLocalPlayer.h"
 #include "Engine/GameInstance.h"
 #include "GameUIPolicy.h"
@@ -14,10 +15,11 @@ class UClass;
 void UGameUIManagerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
-
-	if (!CurrentPolicy && !DefaultUIPolicyClass.IsNull())
+	
+	const UCommonGameSettings* CommonGameSettings = GetDefault<UCommonGameSettings>();
+	if (!CurrentPolicy && CommonGameSettings &&  !CommonGameSettings->DefaultUIPolicyClass.IsNull())
 	{
-		TSubclassOf<UGameUIPolicy> PolicyClass = DefaultUIPolicyClass.LoadSynchronous();
+		TSubclassOf<UGameUIPolicy> PolicyClass = CommonGameSettings->DefaultUIPolicyClass.LoadSynchronous();
 		SwitchToPolicy(NewObject<UGameUIPolicy>(this, PolicyClass));
 	}
 
