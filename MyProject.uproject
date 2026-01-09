@@ -36,6 +36,10 @@
 		{
 			"Name": "CommonUser",
 			"Enabled": true
+		},
+		{
+			"Name": "UIExtension",
+			"Enabled": true
 		}
 	]
 }
